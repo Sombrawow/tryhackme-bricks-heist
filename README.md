@@ -16,6 +16,6 @@ Este repositorio documenta la resolución de la sala "Bricks Heist" en TryHackMe
 Este contenido es exclusivamente con fines **educativos**. Todas las actividades se realizaron en un entorno controlado (TryHackMe). No utilice estas técnicas en sistemas sin autorización explícita.
 
 ## 🔗 Enlaces
-- [Ver Informe Profesional](./INFORME_PROFESIONAL.md)
+- [Ver Informe Profesional](INFORME_PROFESIONAL)
 - [Ver Walkthrough Técnico](./WRITEUP_TECNICO.md)
 - [Mi Perfil de TryHackMe](https://tryhackme.com/p/coursera.pelican)
