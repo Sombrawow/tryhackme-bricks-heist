@@ -17,5 +17,5 @@ Este contenido es exclusivamente con fines **educativos**. Todas las actividades
 
 ## 🔗 Enlaces
 - [Ver Informe Profesional](INFORME_PROFESIONAL)
-- [Ver Walkthrough Técnico](./WRITEUP_TECNICO.md)
+- [Ver Walkthrough Técnico](WRITEUP_TECNICO)
 - [Mi Perfil de TryHackMe](https://tryhackme.com/p/coursera.pelican)
