@@ -12,7 +12,7 @@ Se realizó una auditoría de seguridad sobre la máquina objetivo "Bricks Heist
 ### Hallazgo 1: [CVE-2024-25600 - Bricks Builder Theme v1.9.5]
 - **Severidad:** Alta
 - **Descripción:** Se detectó que la version de Bricks Builder Theme v1.9.5 era vulnerable y permitió ejecución de código PHP arbitrario, no requeria de credenciales y dio acceso completo al servidor web.
-- **Evidencia:** Ver captura en `CVE-2024-25600 - Bricks Builder Theme v1.9.5.png`.
+- **Evidencia:** Ver captura en `assets/CVE-2024-25600 - Bricks Builder Theme v1.9.5.png`.
 - **Recomendación:** [Explica cómo parchearlo, ej. Actualizar a la versión X, cambiar configuración, etc.]
 
 ### Hallazgo 2: [ej. Contraseñas por Defecto]
