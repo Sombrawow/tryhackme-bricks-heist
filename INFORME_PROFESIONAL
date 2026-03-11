@@ -1,0 +1,24 @@
+# Informe de Auditoría de Seguridad - Bricks Heist
+
+**Autor:** Javier
+**Fecha:** 10/03/2026
+**Clasificación:** CONFIDENCIAL (Simulado)
+
+## 1. Resumen Ejecutivo
+Se realizó una auditoría de seguridad sobre la máquina objetivo "Bricks Heist". Se identificaron **[Número]** vulnerabilidades críticas que permitieron el acceso no autorizado al sistema. El riesgo general se clasifica como **ALTO**.
+
+## 2. Hallazgos Principales
+
+### Hallazgo 1: [Nombre de la vulnerabilidad, ej. Servicio SSH Débil]
+- **Severidad:** Alta
+- **Descripción:** Se detectó que el servicio [Nombre] estaba expuesto en el puerto [X] permitiendo [acción].
+- **Evidencia:** Ver captura en `assets/vuln1.png`.
+- **Recomendación:** [Explica cómo parchearlo, ej. Actualizar a la versión X, cambiar configuración, etc.]
+
+### Hallazgo 2: [ej. Contraseñas por Defecto]
+- **Severidad:** Crítica
+- **Descripción:** ...
+- **Recomendación:** ...
+
+## 3. Conclusión General
+La infraestructura evaluada carece de controles básicos de endurecimiento (hardening). Se recomienda priorizar la parcheación de los servicios identificados y la implementación de políticas de contraseñas robustas.
