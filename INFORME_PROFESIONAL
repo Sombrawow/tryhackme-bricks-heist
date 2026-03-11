@@ -3,9 +3,13 @@
 **Autor:** Javier
 **Fecha:** 10/03/2026
 **Clasificación:** CONFIDENCIAL (Simulado)
+---
 
 ## 1. Resumen Ejecutivo
-Se realizó una auditoría de seguridad sobre la máquina objetivo "Bricks Heist". Se identificaron **[6]** vulnerabilidades críticas que permitieron el acceso no autorizado al sistema. El riesgo general se clasifica como **ALTO**.
+Se realizó una auditoría de seguridad sobre la máquina objetivo **"Bricks Heist"**. Se identificaron **6 vulnerabilidades críticas** que permitieron el acceso no autorizado al sistema. El riesgo general se clasifica como **🔴 ALTO**.
+
+El servidor fue comprometido inicialmente a través de un tema de WordPress vulnerable y posteriormente utilizado para criptominería ilegal.
+---
 
 ## 2. Hallazgos Principales
 
@@ -64,6 +68,10 @@ Hallazgo 6: Configuración de Minería con Wallet Codificada
   -Reportar la wallet address a plataformas de Threat Intelligence
   -Buscar la wallet en bases de datos de IOCs (VirusTotal, ThreatConnect)
   -Documentar todos los IOCs para compartir con la comunidad de seguridad
+---
 
 ## 3. Conclusión General
-Brick Press Media Co. sufrió un compromiso de servidor. El sitio WordPress fue explotado y convertido en una plataforma de criptominería ilegal.
+**Brick Press Media Co.** sufrió un compromiso total de servidor. El sitio WordPress fue explotado mediante CVE-2024-25600 y convertido en una plataforma de criptominería ilegal. Se requiere remediación inmediata y endurecimiento del sistema.
+
+---
+*Este informe es producto de un entorno de laboratorio educativo (TryHackMe).*
