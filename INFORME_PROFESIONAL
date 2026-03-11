@@ -40,6 +40,7 @@ Hallazgo 3: phpMyAdmin Expuesto Públicamente
   -Mover phpMyAdmin a una ubicación no estándar
   -Considerar el uso de VPN para acceso administrativo
   -Eliminar phpMyAdmin si no es estrictamente necesario en producción
+- **Evidencia:** Ver captura en `assets/phpmyadmin.png`.
 
 Hallazgo 4: Servicio systemd Malicioso (ubuntu.service)
 - **Severidad:** 🔴 Crítica
@@ -49,6 +50,7 @@ Hallazgo 4: Servicio systemd Malicioso (ubuntu.service)
   -Recargar systemd: systemctl daemon-reload
   -Implementar monitoreo de cambios en /etc/systemd/system/
   -Usar herramientas de integridad de archivos (AIDE, Tripwire)
+- **Evidencia:** Ver captura en `assets/ubuntu.service.png`.
 
 Hallazgo 5: Malware de Criptominería (nm-inet-dialog)
 - **Severidad:** 🔴 Crítica
@@ -59,6 +61,7 @@ Hallazgo 5: Malware de Criptominería (nm-inet-dialog)
   -Implementar soluciones EDR (Endpoint Detection and Response)
   -Monitorear procesos con alto consumo de CPU
   -Bloquear comunicaciones a pools de minería conocidos en el firewall
+- **Evidencia:** Ver captura en `assets/nm-inet-dialog.png`.
 
 Hallazgo 6: Configuración de Minería con Wallet Codificada
 - **Severidad:** 🟠 Alta
@@ -68,6 +71,7 @@ Hallazgo 6: Configuración de Minería con Wallet Codificada
   -Reportar la wallet address a plataformas de Threat Intelligence
   -Buscar la wallet en bases de datos de IOCs (VirusTotal, ThreatConnect)
   -Documentar todos los IOCs para compartir con la comunidad de seguridad
+- **Evidencia:** Ver captura en `assets/inet.cong.png` y `assets/encryp_wallet.png` .
 ---
 
 ## 3. Conclusión General
