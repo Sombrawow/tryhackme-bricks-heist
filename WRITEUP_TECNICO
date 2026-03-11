@@ -1,0 +1,6 @@
+# Walkthrough Técnico - Bricks Heist
+
+## Fase 1: Reconocimiento (Recon)
+Utilicé `nmap` para escanear los puertos abiertos.
+```bash
+nmap -sC -sV -oN inicial.log [IP_OBJETIVO]
